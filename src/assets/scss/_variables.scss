@@ -1,0 +1,23 @@
+$background-bright: #f9f6f7;
+$background-bright-2: #7f7f7f;
+$bright-gradient: linear-gradient(to bottom right, transparent 80%, $background-bright-2);
+
+$background-middle: #59656F;
+
+$background-dark: #11144c;
+
+$accent-color: #3a9679;
+$accent-color-2: #559c86;
+$accent-gradient: linear-gradient(to bottom right, $accent-color, $accent-color-2);
+
+$info-color: #fabc60;
+$info-color-2: #f8c579;
+$info-gradient: linear-gradient(to bottom right, $info-color, $info-color-2);
+
+$warning-color: #e16262;
+$warning-color-2: #CB1281;
+$warning-gradient: linear-gradient(to bottom right, $warning-color, $warning-color-2);
+
+
+$break-tablet: 768px;
+$break-desktop: 1176px;
