@@ -12,7 +12,7 @@ const state = {
     maxDigit: 9,
     digitCount: 9,
     maxLives: 3,
-    maxTime: 60 // seconds
+    maxTime: 15 * 1000 // seconds
   },
   orderedArray: [1],
   shuffledArray: [],
@@ -21,7 +21,8 @@ const state = {
   gameRunning: true,
   gameWon: false,
   failCount: 0,
-  startTime: null
+  startTime: null,
+  now: null
 };
 
 const store = new Vuex.Store({

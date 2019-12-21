@@ -61,3 +61,7 @@ export const popDigit = ({ commit, state }, digit) => {
 export const failedTry = ({ commit }) => {
   commit('FAILED_TRY');
 };
+
+export const timeOver = ({ commit }) => {
+  commit('TIME_OVER');
+}
