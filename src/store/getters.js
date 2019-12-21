@@ -1,6 +1,3 @@
-export const minDigit = state => state.minDigit;
-export const maxDigit = state => state.maxDigit;
-export const digitCount = state => state.digitCount;
 export const nextDigit = state => state.nextDigit;
 export const currentDigit = state => state.currentDigit;
 export const orderedArray = state => state.orderedArray;

@@ -32,7 +32,9 @@ export default {
   color: $background-bright;
   background: $background-dark;
   width: 20vw;
+  max-width: 20vh;
   height: 20vw;
+  max-height: 20vh;
   justify-content: center;
   align-items: center;
   font-weight: 900;

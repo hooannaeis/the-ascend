@@ -7,9 +7,13 @@ import * as mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
-  minDigit: 1,
-  maxDigit: 9,
-  digitCount: 9,
+  gameConfigs: {
+    minDigit: 1,
+    maxDigit: 9,
+    digitCount: 9,
+    maxLives: 3,
+    maxTime: 60 // seconds
+  },
   orderedArray: [1],
   shuffledArray: [],
   nextDigit: -1,
@@ -17,7 +21,7 @@ const state = {
   gameRunning: true,
   gameWon: false,
   failCount: 0,
-  maxLives: 3
+  startTime: null
 };
 
 const store = new Vuex.Store({

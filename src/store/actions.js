@@ -18,11 +18,11 @@ function shuffle(array) {
 }
 
 export const startGame = ({ commit, state }) => {
-  for (var a = [], i = 0; i < state.maxDigit; ++i) a[i] = i + state.minDigit;
+  for (var a = [], i = 0; i < state.gameConfigs.maxDigit; ++i) a[i] = i + state.gameConfigs.minDigit;
   var shuffledArray = shuffle(a);
   commit('SET_VAR', {
     varName: 'shuffledArray',
-    varValue: shuffledArray.slice(0, state.digitCount)
+    varValue: shuffledArray.slice(0, state.gameConfigs.digitCount)
   });
 
   const orderedArray = [...state.shuffledArray].sort();
