@@ -3,7 +3,24 @@
     <div v-if="gameWon">congrats, you won</div>
     <div v-else>oh no, you lost</div>
     Missed tries: {{ failCount }}
-    <button @click="startGame">New Game</button>
+    <ul>
+      <li>
+        <button @click="startGame">
+          <span>
+            New Game
+          </span>
+        </button>
+      </li>
+      <li>
+        <router-link to="/highscores">
+          <button>
+            <span>
+              Highscores
+            </span>
+          </button>
+        </router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -18,3 +35,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.test {
+  display: none;
+}
+</style>

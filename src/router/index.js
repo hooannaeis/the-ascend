@@ -6,10 +6,28 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Home.vue')
-  }
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Game.vue')
+  },
+  {
+    path: '/highscores',
+    name: 'Highscores',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/HighScores.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+  },
 ];
 
 const router = new VueRouter({

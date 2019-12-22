@@ -4,7 +4,7 @@ export const SET_VAR = (state, payload) => {
 
 export const FAILED_TRY = state => {
   state.failCount += 1;
-  if (state.failCount >= state.maxLives) {
+  if (state.failCount >= state.gameConfigs.maxLives) {
     state.gameRunning = false;
     state.gameWon = false;
   }

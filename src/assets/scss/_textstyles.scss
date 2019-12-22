@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Roboto:300i&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: $background-bright;
+
+  &:active {
+    text-decoration: none;
+  }
+}
+
+ul,
+li {
+  list-style: None;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2rem;
+  margin: 0;
+  padding: 0.4rem 0;
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0.4rem 0;
+}
+
+h3 {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+h4 {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  margin: 0;
+}

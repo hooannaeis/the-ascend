@@ -17,11 +17,11 @@ export default {
       this.$store.state.now = new Date().getTime();
       if (!this.timeLeft) {
         this.timeOver();
-      };
+      }
       if (!this.$store.state.gameRunning) {
         clearInterval(timerInterval);
       }
-    }, 1000);
+    }, 250);
   },
   data() {
     return {
@@ -57,7 +57,6 @@ export default {
   position: relative;
   background: $background-middle;
   padding: 5px;
-  box-shadow: inset 0 -1px 1px $background-bright;
 
   & > span {
     display: block;
