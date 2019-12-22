@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Timer',
   created() {
     let timerInterval = window.setInterval(() => {
-      this.$store.state.now = new Date().getTime();
+      this.$store.state.gameStats.now = new Date().getTime();
       if (!this.timeLeft) {
         this.timeOver();
       }
@@ -32,13 +32,14 @@ export default {
     ...mapActions(['timeOver'])
   },
   computed: {
+    ...mapGetters(['correctedNow', 'timePassed']),
     secondsPassed() {
-      return Math.floor(this.$store.state.now - this.$store.state.startTime, 0);
+      return Math.floor(this.correctedNow - this.$store.state.gameStats.startTime, 0);
     },
     timeLeftPercent() {
       var percentPassed =
         Math.floor(
-          ((this.$store.state.gameConfigs.maxTime - this.secondsPassed) /
+          ((this.$store.state.gameConfigs.maxTime - this.timePassed) /
             this.$store.state.gameConfigs.maxTime) *
             100
         ) - 1;

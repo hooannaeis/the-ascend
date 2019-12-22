@@ -1,6 +1,8 @@
 <template>
-  <div class="poppill" @click="tryPop(digit)">{{ digit }}</div>
+  <div class="poppill" :class="{'poppill--failed': isFailedTry}" @click="tryPop(digit)">{{ digit }}</div>
 </template>
+
+
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -10,6 +12,11 @@ export default {
   props: {
     digit: Number
   },
+  data() {
+    return {
+      isFailedTry: false
+    }
+  },
   computed: mapGetters(['currentDigit', 'roundsLeft', 'failCount']),
   methods: {
     tryPop(pressedDigit) {
@@ -18,6 +25,10 @@ export default {
         this.setNextLevel();
       } else {
         this.failedTry();
+        this.isFailedTry = true;
+        setTimeout(() => {
+          this.isFailedTry = false;
+        }, 100)
       }
     },
     ...mapActions(['setNextLevel', 'popDigit', 'failedTry'])
@@ -40,5 +51,9 @@ export default {
   font-weight: 900;
   border: 2px solid $warning-color;
   cursor: pointer;
+
+  &--failed {
+    background: $warning-color;
+  }
 }
 </style>

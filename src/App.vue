@@ -19,7 +19,7 @@
   max-width: $break-tablet;
   text-align: center;
   margin: auto;
-  min-height: 98vh;
+  min-height: 78vh;
   min-width: 94vw;
 }
 

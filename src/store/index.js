@@ -14,15 +14,18 @@ const state = {
     maxLives: 3,
     maxTime: 15 * 1000 // seconds
   },
+  gameStats: {
+    failCount: 0,
+    startTime: null,
+    now: null,
+    timePunishments: 0
+  },
   orderedArray: [1],
   shuffledArray: [],
   nextDigit: -1,
   currentDigit: 1,
   gameRunning: true,
   gameWon: false,
-  failCount: 0,
-  startTime: null,
-  now: null
 };
 
 const store = new Vuex.Store({

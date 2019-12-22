@@ -3,20 +3,22 @@ export const SET_VAR = (state, payload) => {
 };
 
 export const FAILED_TRY = state => {
-  state.failCount += 1;
-  if (state.failCount >= state.gameConfigs.maxLives) {
+  state.gameStats.failCount += 1;
+  state.gameStats.timePunishments += 3000;
+  if (state.gameStats.failCount >= state.gameConfigs.maxLives) {
     state.gameRunning = false;
     state.gameWon = false;
   }
 };
 
 export const START_GAME = state => {
-  state.startTime = new Date().getTime();
-  state.failCount = 0;
+  state.gameStats.startTime = new Date().getTime();
+  state.gameStats.failCount = 0;
+  state.gameStats.timePunishments = 0;
   state.gameRunning = true;
   state.gameWon = false;
   state.roundsLeft = 1;
-  state.now = new Date().getTime();
+  state.gameStats.now = new Date().getTime();
 };
 
 export const GAME_WON = state => {
