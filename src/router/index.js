@@ -5,34 +5,46 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Home.vue')
-  },
-  {
     path: '/game',
     name: 'Game',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Game.vue')
+    meta: {
+      title: 'Game'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Game.vue')
   },
   {
     path: '/highscores',
     name: 'Highscores',
+    meta: {
+      title: 'Highscores'
+    },
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/HighScores.vue')
+    import(/* webpackChunkName: "about" */ '../views/HighScores.vue')
   },
   {
     path: '/settings',
     name: 'Settings',
+    meta: {
+      title: 'Settings'
+    },
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Settings.vue')
-  },
-  {
+    },
+    {
+      path: '/',
+      name: 'Home',
+      meta: {
+        title: 'Home'
+      },
+      component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    },
+    {
     path: '*',
-    name: 'Home',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    name: 'Redirect - Home',
+    meta: {
+      title: 'Home'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   }
 ];
 
@@ -40,6 +52,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+});
+
+const DEFAULT_TITLE = 'ascend - the game';
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  document.title = to.meta.title || DEFAULT_TITLE;
+  next();
 });
 
 export default router;
