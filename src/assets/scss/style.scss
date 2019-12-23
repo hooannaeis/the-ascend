@@ -48,3 +48,19 @@ button {
     }
   }
 }
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  border: none;
+  border-bottom: 0.1rem solid $background-bright;
+  font-size: 1rem;
+  background-color: transparent;
+  max-width: 100%;
+  color: $background-bright;
+  padding: 0.3rem;
+
+  &:focus {
+    outline: none;
+  }
+}

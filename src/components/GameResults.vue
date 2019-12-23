@@ -4,6 +4,25 @@
       <h1>Congrats</h1>
       <p>you won</p>
       <p>Your time: {{ secondsPassed }} Seconds</p>
+      <p v-if="formSuccess">{{formSuccess}}</p>
+      <div v-if="showUsernameField">
+        <p>Your time is fast enough to go on the global leaderboard. Do you want to add it?</p>
+        <p>
+          <input
+            type="text"
+            name="username"
+            ref="username"
+            v-model="username"
+            placeholder="Enter username"
+          />
+        </p>
+        <p v-if="formError">{{formError}}</p>
+        <p>
+          <button @click="handleNewHighscore">
+            <span>Save highscore</span>
+          </button>
+        </p>
+      </div>
     </div>
     <div v-else>
       <h2>Oh no</h2>
@@ -33,17 +52,17 @@
 import LocalHighscores from '@/components/LocalHighscores.vue';
 import { mapGetters, mapActions } from 'vuex';
 
-function numberifyStringArray(inputArray) {
-  let outArray = [];
-  for (var i = 0; i < inputArray.length; i++) {
-    var numberAsFloat = parseFloat(inputArray[i]);
-    if (numberAsFloat) outArray.push(numberAsFloat);
-  }
-  return outArray;
-}
-
 export default {
   name: 'GameResults',
+  data() {
+    return {
+      showUsernameField: false,
+      username: '',
+      slowestGlobalHighscore: null,
+      formError: false,
+      formSuccess: false
+    };
+  },
   components: {
     LocalHighscores
   },
@@ -54,25 +73,87 @@ export default {
       return (this.timePassed / MILISECONDS_IN_A_SECOND).toFixed(3);
     }
   },
-  created() {
+  async created() {
     if (this.gameWon) {
       const HIGHSCORE_VAR_NAME = 'localHighscores';
       let localHighscores = localStorage.getItem(HIGHSCORE_VAR_NAME);
       if (localHighscores) {
         let lhArray = localHighscores.split(',');
         lhArray.push(String(this.secondsPassed));
-        let floatArray = numberifyStringArray(lhArray);
+        let floatArray = this.numberifyStringArray(lhArray);
         floatArray.sort(function(a, b) {
           return a - b;
         });
         localStorage.setItem(HIGHSCORE_VAR_NAME, floatArray.slice(0, 3));
+
+        this.slowestGlobalHighscore = await this.getSlowestGlobalHighscore();
+
+        if (this.secondsPassed < this.slowestGlobalHighscore.data.time) {
+          this.showUsernameField = true;
+        }
       } else {
         localStorage.setItem(HIGHSCORE_VAR_NAME, String(this.secondsPassed));
       }
     }
   },
   methods: {
-    ...mapActions(['startGame'])
+    ...mapActions(['startGame']),
+    numberifyStringArray(inputArray) {
+      let outArray = [];
+      for (var i = 0; i < inputArray.length; i++) {
+        var numberAsFloat = parseFloat(inputArray[i]);
+        if (numberAsFloat) outArray.push(numberAsFloat);
+      }
+      return outArray;
+    },
+    async handleNewHighscore() {
+      if (this.username) {
+        this.storeHighscoreTime();
+        this.deleteSlowestHighscore();
+        this.formSuccess = 'Good job, you made it to the global leaderboard';
+        this.formError = false;
+        this.showUsernameField = false;
+      } else {
+        this.formError = 'please set a username';
+        this.formSuccess = false;
+      }
+    },
+    storeHighscoreTime() {
+      const highscoreDoc = {
+        username: this.username,
+        time: parseFloat(this.secondsPassed)
+      };
+      this.$store.state.db.collection('highscores').add(highscoreDoc);
+    },
+    deleteSlowestHighscore() {
+      this.$store.state.db
+        .collection('highscores')
+        .doc(this.slowestGlobalHighscore.id)
+        .delete();
+    },
+    async getSlowestGlobalHighscore() {
+      const doc = await this.$store.state.db
+        .collection('highscores')
+        .orderBy('time', 'desc')
+        .limit(1)
+        .get()
+        .then(async function(querySnapshot) {
+          const temp = await {
+            id: querySnapshot.docs[0].id,
+            data: querySnapshot.docs[0].data()
+          };
+
+          return temp;
+        })
+        .catch(function(error) {
+          // eslint-disable-next-line no-console
+          console.log('Error getting documents: ', error);
+          return false;
+        });
+      // eslint-disable-next-line no-console
+      console.log('doc', doc);
+      return doc;
+    }
   }
 };
 </script>

@@ -1,12 +1,27 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import firebase from 'firebase';
+import 'firebase/firestore';
 import * as getters from './getters';
 import * as actions from './actions';
 import * as mutations from './mutations';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyChuCjqT6vgC2swI_uM0B8UDypKDO0mj3A",
+  authDomain: "graf-zahl.firebaseapp.com",
+  databaseURL: "https://graf-zahl.firebaseio.com",
+  projectId: "graf-zahl",
+  storageBucket: "graf-zahl.appspot.com",
+  messagingSenderId: "432534811805",
+  appId: "1:432534811805:web:3f22508d359cf61e651074",
+  measurementId: "G-ZR0PY1WYMW"
+};
+firebase.initializeApp(firebaseConfig);
+
 Vue.use(Vuex);
 
 const state = {
+  db: firebase.firestore(),
   gameConfigs: {
     minDigit: 1,
     maxDigit: 9,
