@@ -26,7 +26,7 @@ export default {
   max-width: $break-tablet;
   text-align: center;
   margin: auto;
-  min-height: 78vh;
+  min-height: 98vh;
   min-width: 94vw;
 }
 
