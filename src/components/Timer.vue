@@ -1,6 +1,6 @@
 <template>
   <div>
-    Time Left:
+    <h2>Time left:</h2>
     <div class="timer__parent">
       <span :style="{ width: timeLeftPercent + '%' }"></span>
     </div>

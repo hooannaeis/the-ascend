@@ -23,7 +23,7 @@ export default {
   text-align: center;
   color: $background-bright;
   background-color: $background-dark;
-  max-width: $break-tablet;
+  max-width: $break-phone;
   text-align: center;
   margin: auto;
   min-height: 98vh;

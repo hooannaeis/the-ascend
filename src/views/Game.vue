@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="game__container">
+      <h1>Game Mode</h1>
       <div class="game__container--running" v-if="gameRunning">
         <div class="digit__conainer">
           <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill>
@@ -30,7 +31,7 @@ export default {
   },
   computed: mapGetters(['shuffledArray', 'gameRunning']),
   methods: {
-    ...mapActions(['setVar', 'setNextLevel', 'startGame'])
+    ...mapActions(['setVar', 'startGame'])
   },
   mounted() {
     this.startGame();
@@ -52,6 +53,7 @@ export default {
   grid-template-columns: repeat(3, 20vw);
   grid-gap: 5vw;
   grid-area: digits;
+  padding: 0.4rem;
 }
 
 .timer__container {

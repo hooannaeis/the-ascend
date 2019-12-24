@@ -3,11 +3,12 @@
     <h2>Your Highscores</h2>
     <div v-if="localHighscores">
       <div
-        v-for="(localHighscore, localHighscoreIndex) in localHighscores" :key="localHighscoreIndex"
+        v-for="(localHighscore, localHighscoreIndex) in localHighscores"
+        :key="localHighscoreIndex"
       >{{ localHighscore }}s</div>
     </div>
 
-            <!-- <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill> -->
+    <!-- <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill> -->
 
     <div v-else>you dont have any highscores yet.</div>
   </div>
@@ -20,9 +21,9 @@ export default {
     localHighscores() {
       let localHighscores = localStorage.getItem('localHighscores');
       if (localHighscores) {
-        return localHighscores.split(',')
+        return localHighscores.split(',');
       } else {
-        return undefined
+        return undefined;
       }
     }
   }

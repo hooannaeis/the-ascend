@@ -19,26 +19,17 @@ const routes = [
       title: 'Highscores'
     },
     component: () =>
-    import(/* webpackChunkName: "about" */ '../views/HighScores.vue')
+      import(/* webpackChunkName: "about" */ '../views/HighScores.vue')
   },
   {
-    path: '/settings',
-    name: 'Settings',
+    path: '/',
+    name: 'Home',
     meta: {
-      title: 'Settings'
+      title: 'Home'
     },
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Settings.vue')
-    },
-    {
-      path: '/',
-      name: 'Home',
-      meta: {
-        title: 'Home'
-      },
-      component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
-    },
-    {
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+  },
+  {
     path: '*',
     name: 'Redirect - Home',
     meta: {

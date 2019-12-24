@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Ascend</h1>
+    <p>All you need to do is press the numbers in ascending order. You can do it 😉</p>
     <ul>
       <li>
         <router-link to="/game">
@@ -13,13 +14,6 @@
         <router-link to="/highscores">
           <button>
             <span>Highscores</span>
-          </button>
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/settings">
-          <button>
-            <span>Settings</span>
           </button>
         </router-link>
       </li>

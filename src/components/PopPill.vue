@@ -1,5 +1,9 @@
 <template>
-  <div class="poppill" :class="{'poppill--failed': isFailedTry}" @click="tryPop(digit)">{{ digit }}</div>
+  <div
+    class="poppill"
+    :class="{'poppill--fail': isFail, 'poppill--success': isSuccess}"
+    @click="tryPop(digit)"
+  >{{ digit }}</div>
 </template>
 
 
@@ -14,21 +18,27 @@ export default {
   },
   data() {
     return {
-      isFailedTry: false
-    }
+      isFail: false,
+      isSuccess: false
+    };
   },
   computed: mapGetters(['currentDigit', 'roundsLeft', 'failCount']),
   methods: {
     tryPop(pressedDigit) {
       if (pressedDigit === this.currentDigit) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 150);
+
         this.popDigit(pressedDigit);
         this.setNextLevel();
       } else {
         this.failedTry();
-        this.isFailedTry = true;
+        this.isFail = true;
         setTimeout(() => {
-          this.isFailedTry = false;
-        }, 100)
+          this.isFail = false;
+        }, 150);
       }
     },
     ...mapActions(['setNextLevel', 'popDigit', 'failedTry'])
@@ -51,9 +61,15 @@ export default {
   font-weight: 900;
   border: 2px solid $warning-color;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
-  &--failed {
+  &--fail {
     background: $warning-color;
+    transform: scale(1.3);
+  }
+  &--success {
+    background: $accent-color;
+    transform: scale(0.7);
   }
 }
 </style>

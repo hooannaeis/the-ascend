@@ -24,6 +24,7 @@ export const START_GAME = state => {
 export const GAME_WON = state => {
   state.gameRunning = false;
   state.gameWon = true;
+  state.gameStats.now = new Date().getTime();
 };
 
 export const TIME_OVER = state => {

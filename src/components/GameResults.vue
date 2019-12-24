@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-if="gameWon">
-      <h1>Congrats</h1>
-      <p>you won</p>
+      <h2>Yeaahhh!!!</h2>
+      <p style="font-size: 2rem">😎</p>
       <p>Your time: {{ secondsPassed }} Seconds</p>
       <p v-if="formSuccess">{{formSuccess}}</p>
       <div v-if="showUsernameField">
@@ -16,7 +16,7 @@
             placeholder="Enter username"
           />
         </p>
-        <p v-if="formError">{{formError}}</p>
+        <p v-if="formError">{{ formError }}</p>
         <p>
           <button @click="handleNewHighscore">
             <span>Save highscore</span>
@@ -25,8 +25,9 @@
       </div>
     </div>
     <div v-else>
-      <h2>Oh no</h2>
-      <p>you lost</p>
+      <h2>Noooo!!!</h2>
+      <p style="font-size: 2rem">😣</p>
+      <p>Go ahead, try again.</p>
     </div>
 
     <LocalHighscores />
@@ -60,7 +61,8 @@ export default {
       username: '',
       slowestGlobalHighscore: null,
       formError: false,
-      formSuccess: false
+      formSuccess: false,
+      secondsPassed: 0
     };
   },
   components: {
@@ -68,15 +70,12 @@ export default {
   },
   computed: {
     ...mapGetters(['gameWon', 'timePassed']),
-    secondsPassed() {
-      const MILISECONDS_IN_A_SECOND = 1000;
-      return (this.timePassed / MILISECONDS_IN_A_SECOND).toFixed(3);
-    }
   },
   async created() {
     if (this.gameWon) {
       const HIGHSCORE_VAR_NAME = 'localHighscores';
       let localHighscores = localStorage.getItem(HIGHSCORE_VAR_NAME);
+      this.secondsPassed = this.calculateTotalSeconds();
       if (localHighscores) {
         let lhArray = localHighscores.split(',');
         lhArray.push(String(this.secondsPassed));
@@ -98,6 +97,10 @@ export default {
   },
   methods: {
     ...mapActions(['startGame']),
+    calculateTotalSeconds() {
+      const MILISECONDS_IN_A_SECOND = 1000;
+      return (this.timePassed / MILISECONDS_IN_A_SECOND).toFixed(3);
+    },
     numberifyStringArray(inputArray) {
       let outArray = [];
       for (var i = 0; i < inputArray.length; i++) {
