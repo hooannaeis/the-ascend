@@ -75,6 +75,7 @@ export default {
     if (this.gameWon) {
       const HIGHSCORE_VAR_NAME = 'localHighscores';
       let localHighscores = localStorage.getItem(HIGHSCORE_VAR_NAME);
+      this.username = localStorage.getItem('username');
       this.secondsPassed = this.calculateTotalSeconds();
       if (localHighscores) {
         let lhArray = localHighscores.split(',');
@@ -112,6 +113,7 @@ export default {
     async handleNewHighscore() {
       if (this.username) {
         this.storeHighscoreTime();
+        localStorage.setItem('username', this.username);
         this.deleteSlowestHighscore();
         this.formSuccess = 'Good job, you made it to the global leaderboard';
         this.formError = false;

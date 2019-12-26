@@ -3,10 +3,10 @@
     <div class="game__container">
       <h1>Game Mode</h1>
       <div class="game__container--running" v-if="gameRunning">
+        <Timer class="timer__container"/>
         <div class="digit__conainer">
           <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill>
         </div>
-        <Timer class="timer__container"/>
       </div>
       <div v-else class="game__container--over">
         <GameResults />
@@ -44,7 +44,7 @@ export default {
   &--running {
     display: grid;
     justify-content: center;
-    grid-template-areas: 'digits' 'timer';
+    grid-template-areas: 'timer' 'digits';
   }
 }
 

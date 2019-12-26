@@ -26,19 +26,19 @@ export default {
   methods: {
     tryPop(pressedDigit) {
       if (pressedDigit === this.currentDigit) {
+        this.setNextLevel();
         this.isSuccess = true;
         setTimeout(() => {
           this.isSuccess = false;
-        }, 150);
+        }, 100);
 
         this.popDigit(pressedDigit);
-        this.setNextLevel();
       } else {
         this.failedTry();
         this.isFail = true;
         setTimeout(() => {
           this.isFail = false;
-        }, 150);
+        }, 100);
       }
     },
     ...mapActions(['setNextLevel', 'popDigit', 'failedTry'])
@@ -59,17 +59,18 @@ export default {
   justify-content: center;
   align-items: center;
   font-weight: 900;
+  font-size: 1.5rem;
   border: 2px solid $warning-color;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
   &--fail {
     background: $warning-color;
-    transform: scale(1.3);
+    transform: scale(1.5);
   }
   &--success {
     background: $accent-color;
-    transform: scale(0.7);
+    transform: scale(0.5);
   }
 }
 </style>

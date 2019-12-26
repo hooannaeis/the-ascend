@@ -58,6 +58,7 @@ export default {
   position: relative;
   background: $background-middle;
   padding: 5px;
+  margin-bottom: 2rem;
 
   & > span {
     display: block;
