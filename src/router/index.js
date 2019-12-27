@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -49,6 +50,7 @@ const DEFAULT_TITLE = 'ascend - the game';
 router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0);
   document.title = to.meta.title || DEFAULT_TITLE;
+  store.state.analytics.logEvent('screen_view', { screen_name: to.meta.title });
   next();
 });
 

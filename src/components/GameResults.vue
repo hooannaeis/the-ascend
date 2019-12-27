@@ -51,6 +51,7 @@
 
 <script>
 import LocalHighscores from '@/components/LocalHighscores.vue';
+
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -73,6 +74,7 @@ export default {
   },
   async created() {
     if (this.gameWon) {
+        this.$store.state.analytics.logEvent('level_end', { success: true });
       const HIGHSCORE_VAR_NAME = 'localHighscores';
       let localHighscores = localStorage.getItem(HIGHSCORE_VAR_NAME);
       this.username = localStorage.getItem('username');
@@ -150,13 +152,9 @@ export default {
 
           return temp;
         })
-        .catch(function(error) {
-          // eslint-disable-next-line no-console
-          console.log('Error getting documents: ', error);
+        .catch(function() {
           return false;
         });
-      // eslint-disable-next-line no-console
-      console.log('doc', doc);
       return doc;
     }
   }

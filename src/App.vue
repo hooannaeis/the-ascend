@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <router-link to="/" class="nav--home" v-if="this.$route.name!='Home'">&pr;</router-link>
+    <router-link to="/" class="nav--home" v-if="this.$route.name!='Home'">	&lt;--</router-link>
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  created() {
-    // eslint-disable-next-line no-console
-    console.log(this.$store.state.db);
-  }
+  name: 'app'
 };
 </script>
 

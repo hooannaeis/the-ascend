@@ -6,7 +6,11 @@
         v-for="(globalHighscore, globalHighscoreIndex) in globalHighscores"
         :key="globalHighscoreIndex"
       >
-        <div>{{globalHighscore.username}}: {{globalHighscore.time}}s</div>
+        <div class="highscore__position">
+          <span>{{globalHighscoreIndex + 1}}</span>
+          <span>{{globalHighscore.username}}</span>
+          <span>{{globalHighscore.time}}</span>
+        </div>
       </div>
     </div>
     <div v-else>you dont have any highscores yet.</div>
@@ -55,7 +59,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test {
-  display: inline;
+.highscore {
+  &__position {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 'rank' 'name' 'time';
+  }
 }
 </style>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/analytics';
 import * as getters from './getters';
 import * as actions from './actions';
 import * as mutations from './mutations';
@@ -16,12 +17,14 @@ const firebaseConfig = {
   appId: "1:432534811805:web:3f22508d359cf61e651074",
   measurementId: "G-ZR0PY1WYMW"
 };
+
 firebase.initializeApp(firebaseConfig);
 
 Vue.use(Vuex);
 
 const state = {
   db: firebase.firestore(),
+  analytics: firebase.analytics(),
   gameConfigs: {
     minDigit: 1,
     maxDigit: 9,
