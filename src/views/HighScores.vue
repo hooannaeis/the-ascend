@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import LocalHighscores from '@/components/LocalHighscores.vue';
-import GlobalHighscores from '@/components/GlobalHighscores.vue';
+import LocalHighscores from '@/components/LocalHighscores.vue'
+import GlobalHighscores from '@/components/GlobalHighscores.vue'
 
 export default {
   name: 'Home',
@@ -16,7 +16,7 @@ export default {
     LocalHighscores,
     GlobalHighscores
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

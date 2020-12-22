@@ -3,9 +3,13 @@
     <div class="game__container">
       <h1>Game Mode</h1>
       <div class="game__container--running" v-if="gameRunning">
-        <Timer class="timer__container"/>
+        <Timer class="timer__container" />
         <div class="digit__conainer">
-          <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill>
+          <PopPill
+            v-for="(pillDigit, index) in shuffledArray"
+            :key="index"
+            :digit="pillDigit"
+          ></PopPill>
         </div>
       </div>
       <div v-else class="game__container--over">
@@ -17,10 +21,10 @@
 
 <script>
 // @ is an alias to /src
-import PopPill from '@/components/PopPill.vue';
-import GameResults from '@/components/GameResults.vue';
-import Timer from '@/components/Timer.vue';
-import { mapGetters, mapActions } from 'vuex';
+import PopPill from '@/components/PopPill.vue'
+import GameResults from '@/components/GameResults.vue'
+import Timer from '@/components/Timer.vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Game',
@@ -34,9 +38,9 @@ export default {
     ...mapActions(['setVar', 'startGame'])
   },
   mounted() {
-    this.startGame();
+    this.startGame()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

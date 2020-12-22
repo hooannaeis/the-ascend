@@ -1,13 +1,13 @@
 module.exports = {
   devServer: {
-    port: 8080,
+    port: 8080
   },
   css: {
     loaderOptions: {
       sass: {
-        prependData : `@import "~@/assets/scss/style.scss";`,
-      },
-    },
+        prependData: `@import "~@/assets/scss/style.scss";`
+      }
+    }
   },
   configureWebpack: {
     optimization: {
@@ -16,4 +16,4 @@ module.exports = {
       }
     }
   }
-};
+}

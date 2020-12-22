@@ -1,15 +1,15 @@
 <template>
   <div
     class="poppill"
-    :class="{'poppill--fail': isFail, 'poppill--success': isSuccess}"
+    :class="{ 'poppill--fail': isFail, 'poppill--success': isSuccess }"
     @click="tryPop(digit)"
-  >{{ digit }}</div>
+  >
+    {{ digit }}
+  </div>
 </template>
 
-
-
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'PopPill',
@@ -20,30 +20,30 @@ export default {
     return {
       isFail: false,
       isSuccess: false
-    };
+    }
   },
   computed: mapGetters(['currentDigit', 'roundsLeft', 'failCount']),
   methods: {
     tryPop(pressedDigit) {
       if (pressedDigit === this.currentDigit) {
-        this.setNextLevel();
-        this.isSuccess = true;
+        this.setNextLevel()
+        this.isSuccess = true
         setTimeout(() => {
-          this.isSuccess = false;
-        }, 100);
+          this.isSuccess = false
+        }, 100)
 
-        this.popDigit(pressedDigit);
+        this.popDigit(pressedDigit)
       } else {
-        this.failedTry();
-        this.isFail = true;
+        this.failedTry()
+        this.isFail = true
         setTimeout(() => {
-          this.isFail = false;
-        }, 100);
+          this.isFail = false
+        }, 100)
       }
     },
     ...mapActions(['setNextLevel', 'popDigit', 'failedTry'])
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

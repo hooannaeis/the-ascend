@@ -5,7 +5,9 @@
       <div
         v-for="(localHighscore, localHighscoreIndex) in localHighscores"
         :key="localHighscoreIndex"
-      >{{ localHighscore }}s</div>
+      >
+        {{ localHighscore }}s
+      </div>
     </div>
 
     <!-- <PopPill v-for="(pillDigit, index) in shuffledArray" :key="index" :digit="pillDigit"></PopPill> -->
@@ -19,15 +21,15 @@ export default {
   name: 'LocalHighscores',
   computed: {
     localHighscores() {
-      let localHighscores = localStorage.getItem('localHighscores');
+      let localHighscores = localStorage.getItem('localHighscores')
       if (localHighscores) {
-        return localHighscores.split(',');
+        return localHighscores.split(',')
       } else {
-        return undefined;
+        return undefined
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

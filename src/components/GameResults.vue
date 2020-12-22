@@ -4,9 +4,12 @@
       <h2>Yeaahhh!!!</h2>
       <p style="font-size: 2rem">😎</p>
       <p>Your time: {{ secondsPassed }} Seconds</p>
-      <p v-if="formSuccess">{{formSuccess}}</p>
+      <p v-if="formSuccess">{{ formSuccess }}</p>
       <div v-if="showUsernameField">
-        <p>Your time is fast enough to go on the global leaderboard. Do you want to add it?</p>
+        <p>
+          Your time is fast enough to go on the global leaderboard. Do you want
+          to add it?
+        </p>
         <p>
           <input
             type="text"
@@ -50,9 +53,8 @@
 </template>
 
 <script>
-import LocalHighscores from '@/components/LocalHighscores.vue';
-
-import { mapGetters, mapActions } from 'vuex';
+import LocalHighscores from '@/components/LocalHighscores.vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'GameResults',
@@ -63,80 +65,87 @@ export default {
       slowestGlobalHighscore: null,
       formError: false,
       formSuccess: false,
-      secondsPassed: 0
-    };
+      secondsPassed: 0,
+      highscoreKey: 'localHighscores'
+    }
   },
   components: {
     LocalHighscores
   },
   computed: {
-    ...mapGetters(['gameWon', 'timePassed']),
+    ...mapGetters(['gameWon', 'timePassed'])
   },
-  async created() {
-    if (this.gameWon) {
-        this.$store.state.analytics.logEvent('level_end', { success: true });
-      const HIGHSCORE_VAR_NAME = 'localHighscores';
-      let localHighscores = localStorage.getItem(HIGHSCORE_VAR_NAME);
-      this.username = localStorage.getItem('username');
-      this.secondsPassed = this.calculateTotalSeconds();
-      if (localHighscores) {
-        let lhArray = localHighscores.split(',');
-        lhArray.push(String(this.secondsPassed));
-        let floatArray = this.numberifyStringArray(lhArray);
-        floatArray.sort(function(a, b) {
-          return a - b;
-        });
-        localStorage.setItem(HIGHSCORE_VAR_NAME, floatArray.slice(0, 3));
+  async mounted() {
+    this.secondsPassed = this.calculateTotalSeconds()
 
-        this.slowestGlobalHighscore = await this.getSlowestGlobalHighscore();
+    this.$gtag.event('level_end', {
+      success: this.gameWon,
+      seconds_passed: this.secondsPassed
+    })
+
+    if (this.gameWon) {
+      let localHighscores = localStorage.getItem(this.highscoreKey)
+      this.username = localStorage.getItem('username')
+      if (localHighscores) {
+        let lhArray = localHighscores.split(',')
+        lhArray.push(String(this.secondsPassed))
+        let floatArray = this.numberifyStringArray(lhArray)
+        floatArray.sort(function(a, b) {
+          return a - b
+        })
+        localStorage.setItem(this.highscoreKey, floatArray.slice(0, 3))
+
+        this.slowestGlobalHighscore = await this.getSlowestGlobalHighscore()
 
         if (this.secondsPassed < this.slowestGlobalHighscore.data.time) {
-          this.showUsernameField = true;
+          this.makeConfetti()
+
+          this.showUsernameField = true
         }
       } else {
-        localStorage.setItem(HIGHSCORE_VAR_NAME, String(this.secondsPassed));
+        localStorage.setItem(this.highscoreKey, String(this.secondsPassed))
       }
     }
   },
   methods: {
     ...mapActions(['startGame']),
     calculateTotalSeconds() {
-      const MILISECONDS_IN_A_SECOND = 1000;
-      return (this.timePassed / MILISECONDS_IN_A_SECOND).toFixed(3);
+      const MILISECONDS_IN_A_SECOND = 1000
+      return (this.timePassed / MILISECONDS_IN_A_SECOND).toFixed(3)
     },
     numberifyStringArray(inputArray) {
-      let outArray = [];
+      let outArray = []
       for (var i = 0; i < inputArray.length; i++) {
-        var numberAsFloat = parseFloat(inputArray[i]);
-        if (numberAsFloat) outArray.push(numberAsFloat);
+        var numberAsFloat = parseFloat(inputArray[i])
+        if (numberAsFloat) outArray.push(numberAsFloat)
       }
-      return outArray;
+      return outArray
     },
     async handleNewHighscore() {
       if (this.username) {
-        this.storeHighscoreTime();
-        localStorage.setItem('username', this.username);
-        this.deleteSlowestHighscore();
-        this.formSuccess = 'Good job, you made it to the global leaderboard';
-        this.formError = false;
-        this.showUsernameField = false;
+        this.storeHighscoreTime()
+        localStorage.setItem('username', this.username)
+        this.deleteSlowestHighscore()
+        this.formSuccess = 'Good job, you made it to the global leaderboard'
+        this.formError = false
+        this.showUsernameField = false
       } else {
-        this.formError = 'please set a username';
-        this.formSuccess = false;
+        this.formError = 'please set a username'
+        this.formSuccess = false
       }
     },
     storeHighscoreTime() {
       const highscoreDoc = {
         username: this.username,
         time: parseFloat(this.secondsPassed)
-      };
-      this.$store.state.db.collection('highscores').add(highscoreDoc);
+      }
+      this.$store.state.db.collection('highscores').add(highscoreDoc)
     },
     deleteSlowestHighscore() {
       this.$store.state.db
         .collection('highscores')
         .doc(this.slowestGlobalHighscore.id)
-        .delete();
+        .delete()
     },
     async getSlowestGlobalHighscore() {
       const doc = await this.$store.state.db
@@ -148,17 +157,29 @@ export default {
           const temp = await {
             id: querySnapshot.docs[0].id,
             data: querySnapshot.docs[0].data()
-          };
+          }
 
-          return temp;
+          return temp
         })
         .catch(function() {
-          return false;
-        });
-      return doc;
+          return false
+        })
+      return doc
+    },
+    makeConfetti() {
+      if (!window.confetti) {
+        return
+      }
+      window.confetti.speed = 0
+      window.confetti.start(3000)
     }
+  },
+  beforeMount() {
+    let confettiScript = document.createElement('script')
+    confettiScript.src = '/confetti.js'
+    document.head.appendChild(confettiScript)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

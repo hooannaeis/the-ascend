@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import store from '../store';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import VueGtag from 'vue-gtag'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -38,20 +38,28 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   }
-];
+]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
+})
 
-const DEFAULT_TITLE = 'ascend - the game';
+Vue.use(
+  VueGtag,
+  {
+    config: { id: 'G-FQ2GL4MCGT' }
+  },
+  router
+)
+
+const DEFAULT_TITLE = 'ascend - the game'
+
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0);
-  document.title = to.meta.title || DEFAULT_TITLE;
-  store.state.analytics.logEvent('screen_view', { screen_name: to.meta.title });
-  next();
-});
+  window.scrollTo(0, 0)
+  document.title = to.meta.title || DEFAULT_TITLE
+  next()
+})
 
-export default router;
+export default router
