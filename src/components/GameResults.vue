@@ -125,7 +125,6 @@ export default {
       if (this.username) {
         this.storeHighscoreTime()
         localStorage.setItem('username', this.username)
-        this.deleteSlowestHighscore()
         this.formSuccess = 'Good job, you made it to the global leaderboard'
         this.formError = false
         this.showUsernameField = false
@@ -140,12 +139,6 @@ export default {
         time: parseFloat(this.secondsPassed)
       }
       this.$store.state.db.collection('highscores').add(highscoreDoc)
-    },
-    deleteSlowestHighscore() {
-      this.$store.state.db
-        .collection('highscores')
-        .doc(this.slowestGlobalHighscore.id)
-        .delete()
     },
     async getSlowestGlobalHighscore() {
       const doc = await this.$store.state.db
