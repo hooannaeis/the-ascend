@@ -65,8 +65,9 @@ export default {
       slowestGlobalHighscore: null,
       formError: false,
       formSuccess: false,
-      secondsPassed: 0,
-      highscoreKey: 'localHighscores'
+      secondsPassed: null,
+      highscoreKey: 'localHighscores',
+      highscoresFull: false
     }
   },
   components: {
@@ -96,11 +97,12 @@ export default {
         localStorage.setItem(this.highscoreKey, floatArray.slice(0, 3))
 
         this.slowestGlobalHighscore = await this.getSlowestGlobalHighscore()
-        const highscoresFull = (await this.getCurrentNumberOfHighscores()) > 10
+        this.highscoresFull = (await this.getCurrentNumberOfHighscores()) >= 10
 
         if (
-          this.secondsPassed < this.slowestGlobalHighscore.data.time ||
-          !highscoresFull
+          (this.secondsPassed &&
+            this.secondsPassed < this.slowestGlobalHighscore.data.time) ||
+          !this.highscoresFull
         ) {
           this.makeConfetti()
 
@@ -139,7 +141,7 @@ export default {
     },
     async handleNewHighscore() {
       if (this.username && this.secondsPassed) {
-        if ((await this.getCurrentNumberOfHighscores) > 10) {
+        if (this.highscoresFull) {
           this.deleteSlowestHighscore()
         }
         this.storeHighscoreTime()
