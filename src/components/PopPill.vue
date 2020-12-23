@@ -1,6 +1,6 @@
 <template>
   <div
-    class="poppill"
+    class="poppill unselectable"
     :class="{ 'poppill--fail': isFail, 'poppill--success': isSuccess }"
     @click="tryPop(digit)"
   >
@@ -62,7 +62,7 @@ export default {
   font-size: 1.5rem;
   border: 2px solid $warning-color;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 
   &--fail {
     background: $warning-color;
@@ -72,5 +72,14 @@ export default {
     background: $accent-color;
     transform: scale(0.5);
   }
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>
