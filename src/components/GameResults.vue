@@ -79,11 +79,6 @@ export default {
   async mounted() {
     this.secondsPassed = this.calculateTotalSeconds()
 
-    this.$gtag.event('level_end', {
-      success: this.gameWon,
-      seconds_passed: this.secondsPassed
-    })
-
     if (this.gameWon) {
       let localHighscores = localStorage.getItem(this.highscoreKey)
       this.username = localStorage.getItem('username')
@@ -111,6 +106,11 @@ export default {
       } else {
         localStorage.setItem(this.highscoreKey, String(this.secondsPassed))
       }
+
+      this.$gtag.event('level_end', {
+        success: this.gameWon,
+        seconds_passed: this.secondsPassed
+      })
     }
   },
   methods: {
