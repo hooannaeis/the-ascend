@@ -49,7 +49,11 @@ const router = new VueRouter({
 Vue.use(
   VueGtag,
   {
-    config: { id: 'G-FQ2GL4MCGT' }
+    config: {
+      id: 'G-FQ2GL4MCGT', params: {
+        'cookie_expires': 60  // 28 days, in seconds
+      }
+    }
   },
   router
 )
