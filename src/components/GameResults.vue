@@ -96,8 +96,12 @@ export default {
         localStorage.setItem(this.highscoreKey, floatArray.slice(0, 3))
 
         this.slowestGlobalHighscore = await this.getSlowestGlobalHighscore()
+        const highscoresFull = (await this.getCurrentNumberOfHighscores()) > 10
 
-        if (this.secondsPassed < this.slowestGlobalHighscore.data.time) {
+        if (
+          this.secondsPassed < this.slowestGlobalHighscore.data.time ||
+          !highscoresFull
+        ) {
           this.makeConfetti()
 
           this.showUsernameField = true
@@ -121,8 +125,23 @@ export default {
       }
       return outArray
     },
+    async getCurrentNumberOfHighscores() {
+      let count = 0
+      await this.$store.state.db
+        .collection('highscores')
+        .get()
+        .then(snap => {
+          count = snap.size
+        })
+      // eslint-disable-next-line
+      console.log('currently sotring ', count, ' highscores')
+      return count
+    },
     async handleNewHighscore() {
-      if (this.username) {
+      if (this.username && this.secondsPassed) {
+        if ((await this.getCurrentNumberOfHighscores) > 10) {
+          this.deleteSlowestHighscore()
+        }
         this.storeHighscoreTime()
         localStorage.setItem('username', this.username)
         this.formSuccess = 'Good job, you made it to the global leaderboard'
@@ -139,6 +158,14 @@ export default {
         time: parseFloat(this.secondsPassed)
       }
       this.$store.state.db.collection('highscores').add(highscoreDoc)
+    },
+    deleteSlowestHighscore() {
+      if (!this.slowestGlobalHighscore) return
+
+      this.$store.state.db
+        .collection('highscores')
+        .doc(this.slowestGlobalHighscore.id)
+        .delete()
     },
     async getSlowestGlobalHighscore() {
       const doc = await this.$store.state.db

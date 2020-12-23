@@ -37,7 +37,7 @@ export default {
   methods: {
     ...mapActions(['setVar', 'startGame'])
   },
-  mounted() {
+  beforeMount() {
     this.startGame()
   }
 }
